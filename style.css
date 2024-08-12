@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+body {
+    min-height: 100vh;
+    background-color: #191919;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #FFF
+}
+
+section {
+    background-color: #525252;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    height: 30vh;
+    width: 70vh;
+
+    border-radius: 10px;
+}
+
+p {
+    font-size: 100px;
+}
+
+button {
+    font-weight: bold;
+    height: 20px;
+    width: 35px;
+
+    background-color: #191919;
+    color: #FFF;
+    border-radius: 5px;
+    border-width: 0px;
+}
