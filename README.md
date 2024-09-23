@@ -1,2 +1,2 @@
-# Contador simples
+# CRUD
 Usando HTML, CSS e JS
