@@ -1,15 +1,14 @@
-import express from 'express'
-import { configDotenv } from 'dotenv'
+import express from "express";
+import userRoute from "./src/routes/user.route.js";
 
-configDotenv()
+import { configDotenv } from "dotenv";
+configDotenv();
 
-const app = express()
-const port = process.env.PORT
+const app = express();
+const port = process.env.PORT;
+
+app.use("/soma", userRoute);
 
 app.listen(port, () => {
-    console.log("Service is running on port " + port)
-})
-
-app.get("/", (req, res) => {
-    res.send("Happiness")
-})
+  console.log("Service is running on port " + port);
+});
