@@ -7,7 +7,8 @@ configDotenv();
 const app = express();
 const port = process.env.PORT;
 
-app.use("/soma", userRoute);
+app.use(express.json());
+app.use("/user", userRoute);
 
 app.listen(port, () => {
   console.log("Service is running on port " + port);
