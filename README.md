@@ -1,2 +1,2 @@
-# CRUD
-Usando HTML, CSS e JS
+# MERN CRUD
+Simple Crud using the MERN stack.
