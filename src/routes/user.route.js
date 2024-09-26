@@ -1,9 +1,10 @@
 import { Router } from "express";
-import { userCreate, userFindAll } from "../controllers/user.controller.js";
+import userController from "../controllers/user.controller.js";
 
 const route = Router();
 
-route.post ("/", userCreate);
-route.get("/", userFindAll);
+route.post ("/", userController.create);
+route.get("/", userController.findAll);
+route.get("/:id", userController.findById)
 
 export default route;

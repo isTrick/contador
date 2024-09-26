@@ -4,4 +4,6 @@ const createService = (body) => User.create(body);
 
 const findAllService = () => User.find()
 
-export default { createService, findAllService };
+const findByIdService = (id) => User.findById(id)
+
+export { createService, findAllService, findByIdService };
