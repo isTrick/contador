@@ -1,6 +1,6 @@
 import userService from "../services/user.service.js";
 
-const create = async (req, res) => {
+const userCreate = async (req, res) => {
   const { name, username, email, password, avatar, background } = req.body;
 
   if (!name || !username || !email || !password || !avatar || !background) {
@@ -26,4 +26,16 @@ const create = async (req, res) => {
   });
 };
 
-export default create;
+const userFindAll = async (req, res) => {
+  const users = await userService.findAllService();
+
+  if (users.length === 0) {
+    return res.send
+      .status(400)
+      .send({ message: "There are no registeres users" });
+  }
+
+  res.send(users)
+};
+
+export { userCreate,  userFindAll };
