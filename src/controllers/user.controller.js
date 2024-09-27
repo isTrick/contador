@@ -3,11 +3,14 @@ import {
   createService,
   findAllService,
   findByIdService,
-  updateService
+  updateService,
 } from "../services/user.service.js";
 import mongoose from "mongoose";
 
 const create = async (req, res) => {
+  try{
+
+  
   const { name, username, email, password, avatar, background } = req.body;
 
   if (!name || !username || !email || !password || !avatar || !background) {
@@ -31,6 +34,14 @@ const create = async (req, res) => {
       background,
     },
   });
+
+}catch(error){
+  console.log('Error Database:' ,error)
+
+  return res.status(400).send({
+    message: 'Error connecting to the server. Please try again later.'
+  })
+}
 };
 
 const findAll = async (req, res) => {
@@ -39,24 +50,14 @@ const findAll = async (req, res) => {
   if (users.length === 0) {
     return res.send
       .status(400)
-      .send({ message: "There are no registeres users" });
+      .send({ message: "There are no registered users" });
   }
 
   res.send(users);
 };
 
 const findById = async (req, res) => {
-  const id = req.params.id;
-
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Invalid ID" });
-  }
-
-  const user = await findByIdService(id);
-
-  if (!user) {
-    return res.status(400).send({ message: "User not found" });
-  }
+  const user = req.user;
 
   res.send(user);
 };
@@ -65,31 +66,14 @@ const update = async (req, res) => {
   const { name, username, email, password, avatar, background } = req.body;
 
   if (!name && !username && !email && !password && !avatar && !background) {
-    res.status(400).send({ message:"Submit at least one field for update" });
+    res.status(400).send({ message: "Submit at least one field for update" });
   }
 
-  const id = req.params.id;
+  const { id, user } = req;
 
-  if (!mongoose.Types.ObjectId.isValid(id)) {
-    return res.status(400).send({ message: "Invalid ID" });
-  }
+  await updateService(id, name, email, password, avatar, background);
 
-  const user = await findByIdService(id);
-
-  if (!user) {
-    return res.status(400).send({ message: "User not found" });
-  };
-
-  await updateService(
-    id,
-    name,
-    email,
-    password,
-    avatar,
-    background
-  )
-
-  res.send({message: "User successfully updated!"})
+  res.send({ message: "User successfully updated" });
 };
 
 export default { create, findAll, findById, update };
