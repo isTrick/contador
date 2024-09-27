@@ -1,3 +1,4 @@
+import User from "../models/User.js";
 import {
   createService,
   findAllService,
@@ -73,20 +74,22 @@ const update = async (req, res) => {
     return res.status(400).send({ message: "Invalid ID" });
   }
 
-  const user = await userService.findByIdService(id);
+  const user = await findByIdService(id);
 
   if (!user) {
     return res.status(400).send({ message: "User not found" });
-  }
+  };
 
-  await userService.updateService(
+  await updateService(
     id,
     name,
     email,
     password,
     avatar,
     background
-  );
+  )
+
+  res.send({message: "User successfully updated!"})
 };
 
 export default { create, findAll, findById, update };
