@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { loginService } from "../services/auth.service.js";
+import { loginService, generateToken } from "../services/auth.service.js";
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -7,11 +7,15 @@ const login = async (req, res) => {
   try {
     const user = await loginService(email);
 
-    const passwordIsValid = bcrypt.compare(password, user.password);
+    const passwordIsValid = bcrypt.compareSync(password, user.password);
 
-    console.log(passwordIsValid);
+    if(!passwordIsValid || !user) {
+      return res.status(404).send({ message: "User or password not found" });
+    }
 
-    res.send({ user });
+    const token = generateToken(user.id);
+
+    res.send({token});
   } catch (err) {
     console.log("Error Database: ", err);
     return res.status(500).send({ message: err.message });
