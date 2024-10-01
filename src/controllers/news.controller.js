@@ -195,4 +195,11 @@ const byUser = async (req, res) => {
   }
 };
 
-export { create, findAll, topNews, findById, searchByTitle, byUser };
+const update = async (req, res) => {
+  try { } catch (err) {
+    console.log("Error Database: ", err);
+    return res.status(500).send({ message: err.message });
+  }
+}
+
+export { create, findAll, topNews, findById, searchByTitle, byUser, update };
