@@ -6,7 +6,8 @@ import {
   findByIdService,
   searchByTitleService,
   byUserService,
-  updateService
+  updateService,
+  eraseService
 } from "../services/news.service.js";
 
 const create = async (req, res) => {
@@ -208,7 +209,7 @@ const update = async (req, res) => {
     const news = await findByIdService(id);
 
     if (news.user._id != req.userId) {
-      return res.status(401).send({ message: "Unauthorized" });
+      return res.status(401).send({ message: "Unauthorized to update post" });
     }
 
     await updateService(id, title, text, banner);
@@ -220,4 +221,32 @@ const update = async (req, res) => {
   }
 };
 
-export { create, findAll, topNews, findById, searchByTitle, byUser, update };
+const erase = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const news = await findByIdService(id);
+
+    if (news.user._id != req.userId) {
+      return res.status(401).send({ message: "Unauthorized to delete post" });
+    }
+
+    await eraseService(id);
+
+    return res.send({ message: "News successfully deleted" });
+  } catch (err) {
+    console.log("Error Database: ", err);
+    return res.status(500).send({ message: err.message });
+  }
+};
+
+export {
+  create,
+  findAll,
+  topNews,
+  findById,
+  searchByTitle,
+  byUser,
+  update,
+  erase,
+};
