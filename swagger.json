@@ -1,0 +1,38 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "News Stack API",
+    "description": "In this API you can manage your news",
+    "contact": {
+      "name": "Patrick Girardi",
+      "url": "https://github.com/trickgirardi",
+      "email": "dev.patrickgirardi@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/user": {},
+    "/user/": {},
+    "/user/{id}": {},
+    "/user/{id}/": {},
+    "/auth": {},
+    "/news": {},
+    "/news/": {},
+    "/news/{id}": {},
+    "/news/{id}/": {},
+    "/news/top": {},
+    "/news/search": {},
+    "/news/byUser": {},
+    "/news/like/{id}/": {},
+    "/news/comment/{id}/": {},
+    "/news/comment/{idNews}/{idComment}/": {}
+  },
+  "components": {},
+
+}
