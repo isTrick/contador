@@ -7,7 +7,11 @@ import {
   searchByTitleService,
   byUserService,
   updateService,
-  eraseService
+  eraseService,
+  likeNewsService,
+  removeLikeNewsService,
+  addCommentService,
+  eraseCommentService,
 } from "../services/news.service.js";
 
 const create = async (req, res) => {
@@ -240,6 +244,80 @@ const erase = async (req, res) => {
   }
 };
 
+const likeNews = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId;
+
+    const newsLiked = await likeNewsService(id, userId);
+
+    if (!newsLiked) {
+      await removeLikeNewsService(id, userId);
+      return res.status(200).send({
+        message: "News successfully unliked",
+      });
+    }
+
+    res.send({
+      message: "News successfully liked",
+    });
+  } catch (err) {
+    console.log("Error Database: ", err);
+    return res.status(500).send({ message: err.message });
+  }
+};
+
+const addComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.userId;
+    const { comment } = req.body;
+
+    if (!comment) {
+      return res.status(400).send({ message: "Write something to comment" });
+    }
+
+    await addCommentService(id, comment, userId);
+
+    res.send({
+      message: "Comment successfully added",
+    });
+  } catch (err) {
+    console.log("Error Database: ", err);
+    return res.status(500).send({ message: err.message });
+  }
+};
+
+const eraseComment = async (req, res) => {
+  try {
+    const { idNews, idComment } = req.params;
+    const userId = req.userId;
+
+    const commentDeleted = await eraseCommentService(idNews, idComment, userId);
+
+    const commentFinder = commentDeleted.comments.find(
+      (comment) => comment.idComment === idComment
+    );
+
+    if(!commentFinder) {
+      return res.status(400).send({ message: "Comment not found" });
+    }
+
+    if (commentFinder.userId !== userId) {
+      return res
+        .status(401)
+        .send({ message: "Unauthorized to delete comment" });
+    }
+
+    res.send({
+      message: "Comment successfully deleted",
+    });
+  } catch (err) {
+    console.log("Error Database: ", err);
+    return res.status(500).send({ message: err.message });
+  }
+};
+
 export {
   create,
   findAll,
@@ -249,4 +327,7 @@ export {
   byUser,
   update,
   erase,
+  likeNews,
+  addComment,
+  eraseComment,
 };
