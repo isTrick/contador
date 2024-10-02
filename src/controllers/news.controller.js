@@ -6,6 +6,7 @@ import {
   findByIdService,
   searchByTitleService,
   byUserService,
+  updateService
 } from "../services/news.service.js";
 
 const create = async (req, res) => {
@@ -196,10 +197,27 @@ const byUser = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  try { } catch (err) {
+  try {
+    const { title, text, banner } = req.body;
+    const { id } = req.params;
+
+    if (!title && !text && !banner) {
+      res.status(400).send({ message: "Submit at least one field for update" });
+    }
+
+    const news = await findByIdService(id);
+
+    if (news.user._id != req.userId) {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+
+    await updateService(id, title, text, banner);
+
+    return res.send({ message: "News successfully updated" });
+  } catch (err) {
     console.log("Error Database: ", err);
     return res.status(500).send({ message: err.message });
   }
-}
+};
 
 export { create, findAll, topNews, findById, searchByTitle, byUser, update };
