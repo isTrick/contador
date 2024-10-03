@@ -14,6 +14,10 @@
     {
       "url": "http://localhost:3000",
       "description": "Development server"
+    },
+    {
+      "url": "https://left-roslyn-patrickg-7b07013c.koyeb.app",
+      "description": "Production server"
     }
   ],
   "paths": {
