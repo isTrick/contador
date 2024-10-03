@@ -148,7 +148,7 @@
               "examples": {
                 "Users": {
                   "value": {
-                    "name": "Thiago Lima"
+                    "name": "John Doe"
                   }
                 }
               }
@@ -178,7 +178,7 @@
     },
     "/auth/login": {
       "post": {
-        "summary": "Login to Breaking News",
+        "summary": "Login to Newstack",
         "description": "Route responsible for logging in a registered user",
         "tags": ["Auth"],
         "requestBody": {
@@ -190,7 +190,7 @@
               "examples": {
                 "User": {
                   "value": {
-                    "email": "docencia.thiago@gmail.com",
+                    "email": "johndoe@mail.com",
                     "password": "12345"
                   }
                 }
